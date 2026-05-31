@@ -8,8 +8,8 @@
 import Foundation
 
 struct StepsModel {
-    let latest: Int
-    let weeklyAvg: Int
-    let weekly: [Int]
-    let monthly: [Int]
+    let latest: Double
+    let weeklyAvg: Double
+    let weekly: [Double]
+    let monthly: [Double]
 }

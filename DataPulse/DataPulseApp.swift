@@ -9,9 +9,10 @@ import SwiftUI
 
 @main
 struct DataPulseApp: App {
+    let manager = HealthKitManager()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            CatalogueView(manager: manager)
         }
     }
 }
