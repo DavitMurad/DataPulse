@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import HealthKit
 
 struct CatalogueView: View {
     @StateObject var vm: StepsViewModel
@@ -24,7 +25,9 @@ struct CatalogueView: View {
                     }
                 }
                 do {
-                    await print(try vm.getSteps())
+                    await print(try vm.getCumulativeData(identifier: .stepCount))
+                    await print(try vm.getCumulativeData(identifier: .flightsClimbed))
+
 
                 } catch {}
             }

@@ -7,8 +7,9 @@
 
 import Foundation
 
-struct SleepModel {
-    let weeklyDuration: [Double]
+struct ClimbedModel: CumulativeDataProtocol {
     let latest: Double
-    let sleepScore: Double
+    let weeklyAvg: Double
+    let weekly: [Double]
+    let monthly: [Double]
 }

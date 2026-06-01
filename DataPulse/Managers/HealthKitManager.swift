@@ -8,6 +8,11 @@
 import Foundation
 import HealthKit
 
+enum HealthKitSystemError: Error {
+    case systemError
+    case notAvailable
+}
+
 class HealthKitManager: DataManagerProtocol {
     
     private var healthStore = HKHealthStore()
@@ -17,15 +22,18 @@ class HealthKitManager: DataManagerProtocol {
               let weight = HKObjectType.quantityType(forIdentifier: .bodyMass),
               let bodyFat = HKObjectType.quantityType(forIdentifier: .bodyFatPercentage),
               let bmi = HKObjectType.quantityType(forIdentifier: .bodyMassIndex),
-              let burnedCals = HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)
+              let burnedCals = HKObjectType.quantityType(forIdentifier: .activeEnergyBurned),
+              let climbed = HKObjectType.quantityType(forIdentifier: .flightsClimbed)
         else { return }
         
         
-        guard let sleep = HKCategoryType.categoryType(forIdentifier: .sleepAnalysis) else { return }
-        let quantityTypes: [HKQuantityType] = [steps, weight, bodyFat, bmi, burnedCals]
-        let categoryTypes: [HKCategoryType] = [sleep]
+//        guard let sleep = HKCategoryType.categoryType(forIdentifier: .sleepAnalysis) else { return }
         
-        let typesToRead: Set<HKObjectType> = Set(quantityTypes).union(categoryTypes)
+        let quantityTypes: [HKQuantityType] = [steps, weight, bodyFat, bmi, burnedCals, climbed]
+//        let categoryTypes: [HKCategoryType] = [sleep]
+        
+//        let typesToRead: Set<HKObjectType> = Set(quantityTypes).union(categoryTypes)
+        let typesToRead: Set<HKObjectType> = Set(quantityTypes)
         
         Task {
             do {
@@ -38,9 +46,9 @@ class HealthKitManager: DataManagerProtocol {
     }
     
     
-    
-    func getStepsData(startDate: Date, interval: DateComponents) async throws -> [Double] {
-        guard let steps = HKObjectType.quantityType(forIdentifier: .stepCount) else { throw URLError(.badURL) }
+    // Steps & CLimbed
+    func getCumulativeData(startDate: Date, interval: DateComponents, identifier: HKQuantityTypeIdentifier) async throws -> [Double] {
+        guard let quantityType = HKObjectType.quantityType(forIdentifier: identifier) else { throw HealthKitSystemError.systemError }
         
         // start - end
         // predicate
@@ -48,14 +56,8 @@ class HealthKitManager: DataManagerProtocol {
         
         let predicate = HKQuery.predicateForSamples(withStart: startDate, end: Date(), options: .strictStartDate)
         return try await withCheckedThrowingContinuation { continuation in
-            let query = HKStatisticsCollectionQuery(
-                quantityType: steps,
-                quantitySamplePredicate: predicate,
-                options: .cumulativeSum,
-                anchorDate: startDate,
-                intervalComponents: interval
-            )
             
+            let query = HKStatisticsCollectionQuery(quantityType: quantityType, quantitySamplePredicate: predicate, options: .cumulativeSum, anchorDate: startDate, intervalComponents: interval)
             
             query.initialResultsHandler = { query, results, error in
                 
@@ -64,17 +66,17 @@ class HealthKitManager: DataManagerProtocol {
                     return
                 }
                 
-                var resultSteps: [Double] = []
+                var resultQuantity: [Double] = []
                 results?.enumerateStatistics(from: startDate, to: Date()) { stats, _ in
                     
                     let results = stats.sumQuantity()?.doubleValue(for: .count()) ?? 0
-                    resultSteps.append(results)
-                    print("Date: \(stats.startDate), Steps: \(steps)")
+                    resultQuantity.append(results)
                 }
-                continuation.resume(returning: resultSteps)
+                continuation.resume(returning: resultQuantity)
                 
             }
             healthStore.execute(query)
         }
     }
+    
 }

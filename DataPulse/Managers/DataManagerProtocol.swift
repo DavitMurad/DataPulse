@@ -6,10 +6,11 @@
 //
 
 import Foundation
+import HealthKit
 
 protocol DataManagerProtocol {
     func requestAccess(completion: @escaping (Bool) -> Void)
-    func getStepsData(startDate: Date, interval: DateComponents) async throws -> [Double]
+    func getCumulativeData(startDate: Date, interval: DateComponents, identifier: HKQuantityTypeIdentifier) async throws -> [Double]
 //    func getWeightData() -> WeightModel
 //    func getCaloriesData() -> CaloriesModel
 //    func getSleepsData() -> SleepModel
