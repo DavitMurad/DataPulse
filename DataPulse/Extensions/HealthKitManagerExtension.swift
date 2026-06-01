@@ -20,7 +20,7 @@ extension HealthKitManager {
         guard let startOfWeek = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: today)) else {
             throw HealthKitSystemError.notAvailable
         }
-        guard let endOfWeek = calendar.date(byAdding: .day, value: -6, to: startOfWeek) else {
+        guard let endOfWeek = calendar.date(byAdding: .day, value: 6, to: startOfWeek) else {
             throw HealthKitSystemError.notAvailable
         }
         
