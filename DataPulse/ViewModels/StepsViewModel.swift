@@ -16,16 +16,22 @@ class StepsViewModel: ObservableObject {
         self.manager = manager
     }
     
-    func getCumulativeData(identifier: HKQuantityTypeIdentifier ) async throws -> CumulativeDataProtocol {
+    func getCumulativeData(identifier: HKQuantityTypeIdentifier ) async throws -> (CumulativeDataProtocol,CumulativeDataProtocol) {
+        // break this up
         do {
             let monthly = try await manager.getCumulativeData(startDate: Date().addingTimeInterval(-2592000), interval: DateComponents(day: 1), identifier: identifier)
             
             let weekly = Array(monthly.suffix(7))
       
-            return StepsModel(latest: weekly[weekly.count - 1], weeklyAvg: weekly.reduce(0, {($0 + $1) / Double(weekly.count)}), weekly: weekly, monthly: monthly)
+            return (StepsModel(latest: weekly[weekly.count - 1], weeklyAvg: weekly.reduce(0, {($0 + $1) / Double(weekly.count)}), weekly: weekly, monthly: monthly),
+                    ClimbedModel(latest: weekly[weekly.count - 1], weeklyAvg: weekly.reduce(0, {($0 + $1) / Double(weekly.count)}), weekly: weekly, monthly: monthly))
             
         } catch {
            throw error
         }
+    }
+    
+    func getWeightData() async -> WeightModel? {
+        try? await manager.getWeightData()
     }
 }

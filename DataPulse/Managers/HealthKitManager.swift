@@ -15,7 +15,7 @@ enum HealthKitSystemError: Error {
 
 class HealthKitManager: DataManagerProtocol {
     
-    private var healthStore = HKHealthStore()
+    var healthStore = HKHealthStore()
     
     func requestAccess(completion: @escaping (Bool) -> Void) {
         guard let steps = HKObjectType.quantityType(forIdentifier: .stepCount),
@@ -26,13 +26,7 @@ class HealthKitManager: DataManagerProtocol {
               let climbed = HKObjectType.quantityType(forIdentifier: .flightsClimbed)
         else { return }
         
-        
-//        guard let sleep = HKCategoryType.categoryType(forIdentifier: .sleepAnalysis) else { return }
-        
         let quantityTypes: [HKQuantityType] = [steps, weight, bodyFat, bmi, burnedCals, climbed]
-//        let categoryTypes: [HKCategoryType] = [sleep]
-        
-//        let typesToRead: Set<HKObjectType> = Set(quantityTypes).union(categoryTypes)
         let typesToRead: Set<HKObjectType> = Set(quantityTypes)
         
         Task {
@@ -79,4 +73,18 @@ class HealthKitManager: DataManagerProtocol {
         }
     }
     
+    func getWeightData() async throws -> WeightModel {
+        do {
+            
+            let weight = try await getWeightRelatedData(identifier: .bodyMass, unit: .gramUnit(with: .kilo))
+            let bodyFat = try await getWeightRelatedData(identifier: .bodyFatPercentage, unit: .percent()).map { $0 * 100 }
+            let bmi = try await getWeightRelatedData(identifier: .bodyMassIndex, unit: .count())
+            
+            return WeightModel(weight: weight, bodyFat: bodyFat, bmi: bmi)
+        } catch {
+            throw HealthKitSystemError.notAvailable
+        }
+
+    }
 }
+

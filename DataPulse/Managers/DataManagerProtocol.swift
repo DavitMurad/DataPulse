@@ -11,7 +11,7 @@ import HealthKit
 protocol DataManagerProtocol {
     func requestAccess(completion: @escaping (Bool) -> Void)
     func getCumulativeData(startDate: Date, interval: DateComponents, identifier: HKQuantityTypeIdentifier) async throws -> [Double]
-//    func getWeightData() -> WeightModel
+    func getWeightData() async throws -> WeightModel
 //    func getCaloriesData() -> CaloriesModel
 //    func getSleepsData() -> SleepModel
 }
