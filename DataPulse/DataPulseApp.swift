@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct DataPulseApp: App {
-    let manager = HealthKitManager()
+    let manager = MockedHealthKitManager()
     var body: some Scene {
         WindowGroup {
             CatalogueView(manager: manager)

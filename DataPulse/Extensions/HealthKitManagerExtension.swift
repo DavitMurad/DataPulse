@@ -9,7 +9,7 @@ import Foundation
 import HealthKit
 
 extension HealthKitManager {
-    func getWeightRelatedData(identifier: HKQuantityTypeIdentifier, unit: HKUnit, options: HKStatisticsOptions, startFrom: Int) async throws -> [Double] {
+    func getHKData(identifier: HKQuantityTypeIdentifier, unit: HKUnit, options: HKStatisticsOptions, startFrom: Int) async throws -> [Double] {
         guard let quantityType = HKObjectType.quantityType(forIdentifier: identifier) else { throw HealthKitSystemError.systemError }
         
         let interval = DateComponents(day: 1)

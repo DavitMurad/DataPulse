@@ -8,9 +8,8 @@
 import Foundation
 import HealthKit
 
-protocol DataManagerProtocol {
+protocol HKDataManagerProtocol {
     func requestAccess(completion: @escaping (Bool) -> Void)
-//    func getCumulativeData(startDate: Date, interval: DateComponents, identifier: HKQuantityTypeIdentifier) async throws -> [Double]
     func getStepsdData() async throws -> StepsModel
     func getClimbedData() async throws -> ClimbedModel
     func getWeightData() async throws -> WeightModel

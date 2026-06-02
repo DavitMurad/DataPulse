@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ClimbedModel: CumulativeDataProtocol {
+struct ClimbedModel {
     let latest: Double
     let weeklyAvg: Double
     let weekly: [Double]

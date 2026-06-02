@@ -7,14 +7,8 @@
 
 import Foundation
 
-protocol CumulativeDataProtocol {
-    var latest: Double { get }
-    var weeklyAvg: Double { get }
-    var weekly: [Double] { get }
-    var monthly: [Double] { get }
-}
 
-struct StepsModel: CumulativeDataProtocol {
+struct StepsModel {
     let latest: Double
     let weeklyAvg: Double
     let weekly: [Double]
