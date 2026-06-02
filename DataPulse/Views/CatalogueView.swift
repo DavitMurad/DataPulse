@@ -25,9 +25,15 @@ struct CatalogueView: View {
                     }
                 }
                 do {
-                    await print(try vm.getCumulativeData(identifier: .stepCount).0)
-                    await print(try vm.getCumulativeData(identifier: .flightsClimbed).1)
-                    await print(vm.getWeightData()?.weight ?? [], vm.getWeightData()?.bodyFat ?? [],  vm.getWeightData()?.bmi ?? [] )
+//                    await print(try vm.getCumulativeData(identifier: .stepCount).0)
+//                    await print(try vm.getCumulativeData(identifier: .flightsClimbed).1)
+//                    await print(vm.getWeightData()?.weight ?? [], vm.getWeightData()?.bodyFat ?? [],  vm.getWeightData()?.bmi ?? [] )
+//                    await print(try vm.getCaloresData())
+                    
+                    print(try await vm.getStepsData())
+                    print(try await vm.getClimbedData())
+                    print(try await vm.getWeightData())
+                    print(try await vm.getCaloresData())
                     
                 } catch {}
             }
