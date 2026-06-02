@@ -24,6 +24,6 @@ struct ClimbView: View {
     }
 }
 
-#Preview {
-    ClimbView()
-}
+//#Preview {
+//    ClimbView()
+//}

@@ -23,6 +23,6 @@ struct WeightView: View {
     }
 }
 
-#Preview {
-    WeightView()
-}
+//#Preview {
+//    WeightView()
+//}

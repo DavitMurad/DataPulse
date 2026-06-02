@@ -25,6 +25,6 @@ struct CaloriesView: View {
     }
 }
 
-#Preview {
-    CaloriesView()
-}
+//#Preview {
+//    CaloriesView()
+//}

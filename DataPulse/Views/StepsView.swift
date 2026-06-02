@@ -25,6 +25,6 @@ struct StepsView: View {
     }
 }
 
-#Preview {
-    StepsView()
-}
+//#Preview {
+//    StepsView()
+//}

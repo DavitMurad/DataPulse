@@ -12,7 +12,7 @@ struct DataPulseApp: App {
     let manager = MockedHealthKitManager()
     var body: some Scene {
         WindowGroup {
-            CatalogueView(manager: manager)
+            CatalogueView(manager: manager).preferredColorScheme(.light)
         }
     }
 }
