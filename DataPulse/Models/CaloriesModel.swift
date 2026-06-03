@@ -8,6 +8,6 @@
 import Foundation
 
 struct CaloriesModel {
-    let weeklyCaloriesBurned: [Double]
+    let weeklyCaloriesBurned: [HealthDataPoint]
     let latest : Double
 }

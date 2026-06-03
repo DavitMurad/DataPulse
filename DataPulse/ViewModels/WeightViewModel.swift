@@ -11,14 +11,14 @@ import Combine
 @MainActor
 class WeightViewModel: ObservableObject {
     let manager: HKDataManagerProtocol
+    
     @Published var weightdData: WeightModel?
     
     init(manager: HKDataManagerProtocol) {
         self.manager = manager
     }
     
-    func getWeightData() async throws -> WeightModel? {
+    func getWeightData() async throws {
         weightdData = try? await manager.getWeightData()
-        return weightdData
     }
 }

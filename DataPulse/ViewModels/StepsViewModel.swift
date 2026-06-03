@@ -15,25 +15,12 @@ class StepsViewModel: ObservableObject {
     
     @Published var stepData: StepsModel?
 
-    
     init(manager: HKDataManagerProtocol) {
         self.manager = manager
     }
     
-    func getStepsData() async throws -> StepsModel? {
+    func getStepsData() async throws {
         stepData = try? await manager.getStepsdData()
-        return stepData
+        
     }
-    
-//    func getClimbedData() async throws -> ClimbedModel? {
-//        try? await manager.getClimbedData()
-//    }
-//    
-//    func getCaloresData() async throws -> CaloriesModel? {
-//        try? await manager.getCaloriesData()
-//    }
-//    
-//    func getWeightData() async -> WeightModel? {
-//        try? await manager.getWeightData()
-//    }
 }

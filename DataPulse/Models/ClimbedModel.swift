@@ -10,6 +10,6 @@ import Foundation
 struct ClimbedModel {
     let latest: Double
     let weeklyAvg: Double
-    let weekly: [Double]
-    let monthly: [Double]
+    let weekly: [HealthDataPoint]
+    let monthly: [HealthDataPoint]
 }

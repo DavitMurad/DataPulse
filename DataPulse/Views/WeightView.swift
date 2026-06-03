@@ -14,12 +14,20 @@ struct WeightView: View {
         _vm = StateObject(wrappedValue: WeightViewModel(manager: manager))
     }
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Color.white
+            VStack {
+                Text("Weight")
+                
+                Text("\(vm.weightdData?.bodyFat.last?.value ?? 0.0)")
+            }
+            
             .task {
                 do {
-                    print(try await vm.getWeightData())
+                    try await vm.getWeightData()
                 } catch {}
             }
+        }
     }
 }
 

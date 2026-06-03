@@ -14,13 +14,18 @@ struct ClimbView: View {
         _vm = StateObject(wrappedValue: ClimbedViewModel(manager: manager))
     }
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Color.white
+            VStack {
+                Text("Climbed")
+                Text("\(vm.climbedData?.latest ?? 0.0)")
+            }
             .task {
                 do {
-                    print(try await vm.getClimbedData())
-                    
+                    try await vm.getClimbedData()
                 } catch {}
             }
+        }
     }
 }
 

@@ -9,7 +9,7 @@ import Foundation
 import HealthKit
 
 extension HealthKitManager {
-    func getHKData(identifier: HKQuantityTypeIdentifier, unit: HKUnit, options: HKStatisticsOptions, startFrom: Int) async throws -> [Double] {
+    func getHKData(identifier: HKQuantityTypeIdentifier, unit: HKUnit, options: HKStatisticsOptions, startFrom: Int) async throws -> [HealthDataPoint] {
         guard let quantityType = HKObjectType.quantityType(forIdentifier: identifier) else { throw HealthKitSystemError.systemError }
         
         let interval = DateComponents(day: 1)
@@ -33,17 +33,28 @@ extension HealthKitManager {
                     continuation.resume(throwing: error)
                     return
                 }
-                var resultQuantity: [Double] = []
+                var resultQuantity: [HealthDataPoint] = []
                 result?.enumerateStatistics(from: startOfWeek, to: dayStart) { stats, _ in
                     switch options {
                     case .cumulativeSum:
-                        resultQuantity.append(stats.sumQuantity()?.doubleValue(for: unit) ?? 0)
+                        print(stats.startDate.formatted(date: .abbreviated, time: .omitted))
+                        print("''''''''''")
+                        print(stats.endDate.formatted(date: .abbreviated, time: .omitted))
+                        let endDate = stats.endDate.formatted(date: .abbreviated, time: .omitted)
+                        let sumQuantity = stats.sumQuantity()?.doubleValue(for: unit) ?? 0
+                        resultQuantity.append(HealthDataPoint(date: stats.endDate, value: sumQuantity))
+                        
                         
                     case .mostRecent:
-                        resultQuantity.append(stats.mostRecentQuantity()?.doubleValue(for: unit) ?? 0)
+                        print(stats.startDate.formatted(date: .abbreviated, time: .omitted))
+                        print("''''''''''")
+                        print(stats.endDate.formatted(date: .abbreviated, time: .omitted))
+                        let endDate = stats.endDate.formatted(date: .abbreviated, time: .omitted)
+                        let sumQuantity = stats.sumQuantity()?.doubleValue(for: unit) ?? 0
+                        resultQuantity.append(HealthDataPoint(date: stats.endDate, value: sumQuantity))
                         
                     default:
-                        resultQuantity.append(0)
+                        resultQuantity.append(HealthDataPoint(date: .now, value: 0.0))
                     }
                 }
                 continuation.resume(returning: resultQuantity)

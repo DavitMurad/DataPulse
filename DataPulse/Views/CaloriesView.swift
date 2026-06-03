@@ -8,20 +8,28 @@
 import SwiftUI
 
 struct CaloriesView: View {
-    @StateObject var vm: CaloriesViewModel
+    @StateObject var caloriesVM: CaloriesViewModel
     
     init(manager: HKDataManagerProtocol) {
-        _vm = StateObject(wrappedValue: CaloriesViewModel(manager: manager))
+        _caloriesVM = StateObject(wrappedValue: CaloriesViewModel(manager: manager))
     }
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Color.white
+            VStack {
+                Text("Calories")
+                
+                Text("\(caloriesVM.caloriesData?.latest ?? 0.0)")
+            }
+            
+            
             .task {
                 do {
-                    print(try await vm.getCaloriesDataData())
-                    
+                    try await caloriesVM.getCaloriesDataData()
                     
                 } catch {}
             }
+        }
     }
 }
 

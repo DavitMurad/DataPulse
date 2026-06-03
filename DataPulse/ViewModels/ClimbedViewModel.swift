@@ -11,14 +11,14 @@ import Combine
 @MainActor
 class ClimbedViewModel: ObservableObject {
     let manager: HKDataManagerProtocol
+    
     @Published var climbedData: ClimbedModel?
     
     init(manager: HKDataManagerProtocol) {
         self.manager = manager
     }
     
-    func getClimbedData() async throws -> ClimbedModel? {
+    func getClimbedData() async throws {
         climbedData = try? await manager.getClimbedData()
-        return climbedData
     }
 }

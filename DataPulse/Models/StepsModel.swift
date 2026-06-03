@@ -11,6 +11,6 @@ import Foundation
 struct StepsModel {
     let latest: Double
     let weeklyAvg: Double
-    let weekly: [Double]
-    let monthly: [Double]
+    let weekly: [HealthDataPoint]
+    let monthly: [HealthDataPoint]
 }

@@ -44,9 +44,10 @@ class HealthKitManager: HKDataManagerProtocol {
         do {
             let monthly = try await getHKData(identifier: .stepCount, unit: .count(), options: .cumulativeSum, startFrom: 30)
             let weekly = Array(monthly.suffix(7))
-            let weeklyAvg = weekly.reduce(0, {$0 + $1}) / Double(weekly.count)
             
-            return StepsModel(latest: weekly.last ?? 0, weeklyAvg: weeklyAvg, weekly: weekly, monthly: monthly)
+            let weeklyAvg = weekly.reduce(0, {$0 + $1.value}) / Double(weekly.count)
+            
+            return StepsModel(latest: weekly.last?.value ?? 0, weeklyAvg: weeklyAvg, weekly: weekly, monthly: monthly)
             
         } catch {
             throw HealthKitSystemError.notAvailable
@@ -57,9 +58,9 @@ class HealthKitManager: HKDataManagerProtocol {
         do {
             let monthly = try await getHKData(identifier: .flightsClimbed, unit: .count(), options: .cumulativeSum, startFrom: 30)
             let weekly = Array(monthly.suffix(7))
-            let weeklyAvg = weekly.reduce(0, {$0 + $1}) / Double(weekly.count)
+            let weeklyAvg = weekly.reduce(0, {$0 + $1.value}) / Double(weekly.count)
     
-            return ClimbedModel(latest: weekly.last ?? 0, weeklyAvg: weeklyAvg, weekly: weekly, monthly: monthly)
+            return ClimbedModel(latest: weekly.last?.value ?? 0, weeklyAvg: weeklyAvg, weekly: weekly, monthly: monthly)
             
         } catch {
             throw HealthKitSystemError.notAvailable
@@ -69,20 +70,19 @@ class HealthKitManager: HKDataManagerProtocol {
     func getWeightData() async throws -> WeightModel {
         do {
             let weight = try await getHKData(identifier: .bodyMass, unit: .gramUnit(with: .kilo), options: .mostRecent, startFrom: 6)
-            let bodyFat = try await getHKData(identifier: .bodyFatPercentage, unit: .percent(), options: .mostRecent, startFrom: 6).map { $0 * 100 }
+            let bodyFat = try await getHKData(identifier: .bodyFatPercentage, unit: .percent(), options: .mostRecent, startFrom: 6).map { HealthDataPoint(date: $0.date, value: $0.value * 100) }
             let bmi = try await getHKData(identifier: .bodyMassIndex, unit: .count(), options: .mostRecent, startFrom: 6)
             
             return WeightModel(weight: weight, bodyFat: bodyFat, bmi: bmi)
         } catch {
             throw HealthKitSystemError.notAvailable
         }
-        
     }
     
     func getCaloriesData() async throws -> CaloriesModel {
         do {
             let burnedCalories = try await getHKData(identifier: .activeEnergyBurned, unit: .kilocalorie(), options: .cumulativeSum, startFrom: 6)
-            return CaloriesModel(weeklyCaloriesBurned: burnedCalories, latest: burnedCalories.last!)
+            return CaloriesModel(weeklyCaloriesBurned: burnedCalories, latest: burnedCalories.last?.value ?? 0)
         } catch {
             throw HealthKitSystemError.notAvailable
         }
