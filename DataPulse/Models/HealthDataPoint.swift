@@ -7,7 +7,9 @@
 
 import Foundation
 
-struct HealthDataPoint {
+struct HealthDataPoint: Identifiable {
     let date: Date
     let value: Double
+    
+    let id = UUID().uuidString
 }

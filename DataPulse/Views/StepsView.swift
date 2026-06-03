@@ -8,20 +8,6 @@
 import SwiftUI
 import Charts
 
-struct SalesData: Identifiable {
-    let id = UUID()
-    let month: String
-    let sales: Int
-}
-
-let salesData = [
-    SalesData(month: "Jan", sales: 200),
-    SalesData(month: "Feb", sales: 150),
-    SalesData(month: "Mar", sales: 180),
-]
-
-
-
 struct StepsView: View {
     @StateObject var vm: StepsViewModel
     
@@ -37,18 +23,21 @@ struct StepsView: View {
                 Text("\(vm.stepData?.latest ?? 0.0)")
                 
                 Chart {
-                    ForEach(salesData) { data in
-                        BarMark(
-                            x: .value("Month", data.month),
-                            y: .value("Sales", data.sales)
-                        )
+                    if let stepData = vm.stepData {
+                        ForEach(stepData.weekly) { data in
+                            BarMark(
+                                x: .value("Day", data.date),
+                                y: .value("Steps", data.value)
+                            )
+                            
+                        }
                     }
+                    
                 }
                 .frame(height: 300)
                 .padding()
-                
             }
-
+            
             .task {
                 do {
                     try await vm.getStepsData()
