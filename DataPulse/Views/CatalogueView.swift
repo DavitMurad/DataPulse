@@ -49,26 +49,29 @@ struct CatalogueView: View {
                     ZStack {
                         VStack(spacing: 50) {
                             HStack(spacing: 50) {
-                                HKCategoryView(color: .blue, systemImageName: "shoeprints.fill", title: "Steps", rotationDegree: 0, namespace: namespace, isExpanded: $isExpanded) {
-                                    title = ViewTitlesOption.steps.title
-                                    currentExpandedView = .steps
-                                    withAnimation(.bouncy) {
-                                        isExpanded.toggle()
+                                if !isExpanded {
+                                    HKCategoryView(color: .blue, systemImageName: "shoeprints.fill", title: "Steps", rotationDegree: 0, namespace: namespace, isExpanded: $isExpanded) {
+                                        title = ViewTitlesOption.steps.title
+                                        currentExpandedView = .steps
+                                        withAnimation(.easeInOut) {
+                                            isExpanded.toggle()
+                                        }
                                     }
                                 }
 
-                                
-                                HKCategoryView(color: .pink, systemImageName: "scalemass", title: "Weight", rotationDegree: 0, namespace: namespace, isExpanded: $isExpanded) {
-                                    title = ViewTitlesOption.weight.title
-                                    currentExpandedView = .weight
-                                    withAnimation(.bouncy) {
-                                        isExpanded.toggle()
+                                if !isExpanded {
+                                    HKCategoryView(color: .pink, systemImageName: "scalemass", title: "Weight", rotationDegree: 0, namespace: namespace, isExpanded: $isExpanded) {
+                                        title = ViewTitlesOption.weight.title
+                                        currentExpandedView = .weight
+                                        withAnimation(.easeInOut) {
+                                            isExpanded.toggle()
+                                        }
                                     }
                                 }
                                 
                             }
                             HStack(spacing: 50)  {
-                                HKCategoryView(color: .green, systemImageName: "flame.fill", title: "Calories", rotationDegree: 45, namespace: namespace, isExpanded: $isExpanded) {
+                                HKCategoryView(color: .green, systemImageName: "flame.fill", title: "Calories", rotationDegree: 0, namespace: namespace, isExpanded: $isExpanded) {
                                     title = ViewTitlesOption.calories.title
                                     currentExpandedView = .calories
                                     withAnimation(.bouncy) {
@@ -150,7 +153,7 @@ struct CatalogueView: View {
                 .frame(maxHeight: .infinity, alignment: .top)
                 .padding(.top, 5)
                 .navigationTitle("Activity")
-                .navigationBarTitleDisplayMode(.automatic)
+                .navigationBarTitleDisplayMode(.inline)
             }
             .task {
                 vm.manager.requestAccess { isSuccess in
