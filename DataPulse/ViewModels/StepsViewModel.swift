@@ -20,7 +20,8 @@ class StepsViewModel: ObservableObject {
     }
     
     func getStepsData() async throws {
-        stepData = try? await manager.getStepsdData()
-        
+        if let stepData = try? await manager.getStepsdData() {
+            self.stepData = stepData
+        }
     }
 }
