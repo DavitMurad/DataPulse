@@ -104,21 +104,18 @@ struct CatalogueView: View {
                                     .shadow(color: .gray.opacity(0.5), radius: 5)
                                     .frame(height: geom.size.height)
                                     .padding()
-                                    .onTapGesture {
-                                        
-                                    }
+                                  
                             case .weight:
-                                WeightView(manager: manager)
+                                WeightView(manager: manager) {
+                                    withAnimation(.easeInOut) {
+                                        isExpanded.toggle()
+                                    }
+                                }
                                     .matchedGeometryEffect(id: title, in: namespace)
                                     .clipShape(RoundedRectangle(cornerRadius: 15))
                                     .shadow(color: .gray.opacity(0.5), radius: 5)
                                     .frame(height: geom.size.height)
                                     .padding()
-                                    .onTapGesture {
-                                        withAnimation(.easeInOut) {
-                                            isExpanded.toggle()
-                                        }
-                                    }
                             case .calories:
                                 CaloriesView(manager: manager)
                                     .matchedGeometryEffect(id: title, in: namespace)

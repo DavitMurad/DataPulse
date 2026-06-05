@@ -10,5 +10,7 @@ import Foundation
 struct WeightModel {
     let weight: [HealthDataPoint]
     let bodyFat: [HealthDataPoint]
-    let bmi: [HealthDataPoint]
+    let bmi: HealthDataPoint
+    let weeklyAvgWeight: Double
+    let weeklyAvgBF: Double
 }

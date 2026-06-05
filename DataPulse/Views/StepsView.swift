@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct StepsView: View {
-    @StateObject var vm: StepsViewModel
+    @StateObject var stepsVM: StepsViewModel
     
     var closeButtonPressed: () -> ()
     
     init(manager: HKDataManagerProtocol, closeButtonPressed: @escaping () -> () ) {
-        _vm = StateObject(wrappedValue: StepsViewModel(manager: manager))
+        _stepsVM = StateObject(wrappedValue: StepsViewModel(manager: manager))
         self.closeButtonPressed = closeButtonPressed
         
     }
@@ -36,7 +36,7 @@ struct StepsView: View {
             
             .task {
                 do {
-                    try await vm.getStepsData()
+                    try await stepsVM.getStepsData()
                 } catch {}
             }
         }

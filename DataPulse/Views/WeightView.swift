@@ -6,31 +6,44 @@
 //
 
 import SwiftUI
+import Charts
 
 struct WeightView: View {
-    @StateObject var vm: WeightViewModel
+    @StateObject var weightVM: WeightViewModel
+    let closeButtonPressed: () -> ()
     
-    init(manager: HKDataManagerProtocol) {
-        _vm = StateObject(wrappedValue: WeightViewModel(manager: manager))
+    init(manager: HKDataManagerProtocol, closeButtonPressed: @escaping () -> () ) {
+        _weightVM = StateObject(wrappedValue: WeightViewModel(manager: manager))
+        self.closeButtonPressed = closeButtonPressed
+        
     }
     var body: some View {
         ZStack {
             Color.white
-            VStack {
-                Text("Weight")
+            VStack(spacing: 20) {
+                closeButton
                 
-                Text("\(vm.weightdData?.bodyFat.last?.value ?? 0.0)")
+                weightGraphView
+                
+                Divider()
+                bfGraphView
+                
+                Divider()
+                bmiBarView
             }
-            
+            .padding()
             .task {
                 do {
-                    try await vm.getWeightData()
+                    try await weightVM.getWeightData()
                 } catch {}
             }
         }
     }
 }
 
-//#Preview {
-//    WeightView()
-//}
+#Preview {
+    let manager = MockedHealthKitManager()
+    WeightView(manager: manager) {
+        
+    }
+}

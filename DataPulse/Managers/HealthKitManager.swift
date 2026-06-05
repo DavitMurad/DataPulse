@@ -70,10 +70,17 @@ class HealthKitManager: HKDataManagerProtocol {
     func getWeightData() async throws -> WeightModel {
         do {
             let weight = try await getHKData(identifier: .bodyMass, unit: .gramUnit(with: .kilo), options: .mostRecent, startFrom: 6)
-            let bodyFat = try await getHKData(identifier: .bodyFatPercentage, unit: .percent(), options: .mostRecent, startFrom: 6).map { HealthDataPoint(date: $0.date, value: $0.value * 100) }
-            let bmi = try await getHKData(identifier: .bodyMassIndex, unit: .count(), options: .mostRecent, startFrom: 6)
             
-            return WeightModel(weight: weight, bodyFat: bodyFat, bmi: bmi)
+            let weeklyAvgWeight = weight.reduce(0, { $0 + $1.value }) / Double(weight.count)
+            
+            let bodyFat = try await getHKData(identifier: .bodyFatPercentage, unit: .percent(), options: .mostRecent, startFrom: 6).map { HealthDataPoint(date: $0.date, value: $0.value * 100) }
+            
+            let weeklyAvgBF = bodyFat.reduce(0, { $0 + $1.value }) / Double(bodyFat.count)
+            
+            
+            let bmi = try await getHKData(identifier: .bodyMassIndex, unit: .count(), options: .mostRecent, startFrom: 6).last ?? HealthDataPoint(date: Date(), value: 0)
+            
+            return WeightModel(weight: weight, bodyFat: bodyFat, bmi: bmi, weeklyAvgWeight: weeklyAvgWeight, weeklyAvgBF: weeklyAvgBF)
         } catch {
             throw HealthKitSystemError.notAvailable
         }

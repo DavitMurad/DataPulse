@@ -11,11 +11,9 @@ import Charts
 extension StepsView {
     
     var closeButtonView: some View {
-        Button {
+        
+        CloseButtonView(foreGroundColor: .blue) {
             closeButtonPressed()
-        } label: {
-            Image(systemName: "x.circle")
-                .withSubTitleTextFormmatting(font: .title, foregroundColor: .blue)
         }
     }
     
@@ -23,9 +21,8 @@ extension StepsView {
         VStack {
             Text("Your steps for today:")
                 .withSubTitleTextFormmatting(font: .title3, foregroundColor: .primary)
-            Text(vm.stepData?.latest ?? 0, format: .number)
+            Text(stepsVM.stepData?.latest ?? 0, format: .number)
                 .withSubTitleTextFormmatting(font: .headline, foregroundColor: .secondary)
-            
         }
     }
     
@@ -35,7 +32,7 @@ extension StepsView {
                 .withSubTitleTextFormmatting(font: .title3, foregroundColor: .primary)
             
             Chart {
-                if let stepData = vm.stepData {
+                if let stepData = stepsVM.stepData {
                     RuleMark(y: .value("Goal", 7500))
                         .foregroundStyle(.pink)
                         .lineStyle(StrokeStyle(lineWidth: 1, dash: [3]))
@@ -53,13 +50,11 @@ extension StepsView {
                         .foregroundStyle(.blue.gradient)
                     }
                 }
-                
             }
             .chartXAxis {
                 AxisMarks(position: .bottom, values: .stride(by: .day))
             }
-            .chartXScale(domain: Calendar.current.date(byAdding: .day, value: -7, to: .now)! ... .now)
-            
+            .chartXScale(domain: stepsVM.XAxisScale)
             .padding(.horizontal, 15)
         }
     }
@@ -69,7 +64,7 @@ extension StepsView {
             Text("Your weekly step distribution across weeks.")
                 .withSubTitleTextFormmatting(font: .title3, foregroundColor: .primary)
             
-            if let stepData = vm.stepData {
+            if let stepData = stepsVM.stepData {
                 Chart(stepData.weekly) { day in
                     SectorMark(angle: .value(Text(verbatim: day.date.formatted(.dateTime.day().month())), day.value),
                                innerRadius: .ratio(0.6)
@@ -87,9 +82,9 @@ extension StepsView {
                     )
                 }
                 
-                .chartBackground(content: { chartProxy in
-                    
-                })
+//                .chartBackground(content: { chartProxy in
+//                    
+//                })
             }
         }
     }

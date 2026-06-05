@@ -24,4 +24,8 @@ class StepsViewModel: ObservableObject {
             self.stepData = stepData
         }
     }
+    
+    var XAxisScale: ClosedRange<Date> {
+        Calendar.current.date(byAdding: .day, value: -7, to: .now)! ... .now
+    }
 }

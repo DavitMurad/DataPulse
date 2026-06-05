@@ -38,11 +38,15 @@ class MockedHealthKitManager: HKDataManagerProtocol  {
          
          let weight = [71.8, 71.7, 71.9, 71.6, 71.5, 71.7, 71.4].enumerated().map { HealthDataPoint(date: Calendar.current.date(byAdding: .day, value: $0.offset - 6, to: .now)!, value: $0.element) }
          
+         let weeklyAvgWeight = weight.reduce(0, { $0 + $1.value }) / Double(weight.count)
+         
          let bodyFat = [13.3, 13.2, 13.4, 13.1, 13.2, 13.0, 13.1].enumerated().map { HealthDataPoint(date: Calendar.current.date(byAdding: .day, value: $0.offset - 6, to: .now)!, value: $0.element) }
          
-         let bmi = [24.85, 24.82, 24.89, 24.78, 24.75, 24.81, 24.71].enumerated().map { HealthDataPoint(date: Calendar.current.date(byAdding: .day, value: $0.offset - 6, to: .now)!, value: $0.element) }
+         let weeklyAvgBF = bodyFat.reduce(0, { $0 + $1.value }) / Double(bodyFat.count)
          
-         return WeightModel(weight: weight, bodyFat: bodyFat, bmi: bmi)
+         let bmi = [24.85, 24.82, 24.89, 24.78, 24.75, 24.81, 24.71].enumerated().map { HealthDataPoint(date: Calendar.current.date(byAdding: .day, value: $0.offset - 6, to: .now)!, value: $0.element) }.last ?? HealthDataPoint(date: Date(), value: 0)
+         
+         return WeightModel(weight: weight, bodyFat: bodyFat, bmi: bmi, weeklyAvgWeight: weeklyAvgWeight, weeklyAvgBF: weeklyAvgBF)
      }
      
      func getCaloriesData() async throws -> CaloriesModel {
