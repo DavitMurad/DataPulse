@@ -9,20 +9,27 @@ import SwiftUI
 
 struct CaloriesView: View {
     @StateObject var caloriesVM: CaloriesViewModel
+    var closeButtonPressed: () -> ()
     
-    init(manager: HKDataManagerProtocol) {
+    init(manager: HKDataManagerProtocol, closeButtonPressed: @escaping () -> ()) {
         _caloriesVM = StateObject(wrappedValue: CaloriesViewModel(manager: manager))
+        self.closeButtonPressed = closeButtonPressed
     }
     var body: some View {
         ZStack {
             Color.white
-            VStack {
-                Text("Calories")
+            VStack(spacing: 20) {
+                closeButton
                 
-                Text("\(caloriesVM.caloriesData?.latest ?? 0.0)")
+                calsToday
+                Divider()
+                calsProgressView
+                Divider()
+                calsText
+                
             }
-            
-            
+            .frame(maxHeight: .infinity, alignment: .top)
+            .padding()
             .task {
                 do {
                     try await caloriesVM.getCaloriesDataData()
@@ -33,6 +40,9 @@ struct CaloriesView: View {
     }
 }
 
-//#Preview {
-//    CaloriesView()
-//}
+#Preview {
+    let manager = MockedHealthKitManager()
+    CaloriesView(manager: manager) {
+        
+    }
+}

@@ -71,11 +71,13 @@ struct CatalogueView: View {
                                 
                             }
                             HStack(spacing: 50)  {
-                                HKCategoryView(color: .green, systemImageName: "flame.fill", title: "Calories", rotationDegree: 0, namespace: namespace, isExpanded: $isExpanded) {
-                                    title = ViewTitlesOption.calories.title
-                                    currentExpandedView = .calories
-                                    withAnimation(.bouncy) {
-                                        isExpanded.toggle()
+                                if !isExpanded {
+                                    HKCategoryView(color: .green, systemImageName: "flame.fill", title: "Calories", rotationDegree: 0, namespace: namespace, isExpanded: $isExpanded) {
+                                        title = ViewTitlesOption.calories.title
+                                        currentExpandedView = .calories
+                                        withAnimation(.easeInOut) {
+                                            isExpanded.toggle()
+                                        }
                                     }
                                 }
                                 
@@ -117,17 +119,17 @@ struct CatalogueView: View {
                                     .frame(height: geom.size.height)
                                     .padding()
                             case .calories:
-                                CaloriesView(manager: manager)
+                                CaloriesView(manager: manager) {
+                                    withAnimation(.easeInOut) {
+                                        isExpanded.toggle()
+                                    }
+                                }
                                     .matchedGeometryEffect(id: title, in: namespace)
                                     .clipShape(RoundedRectangle(cornerRadius: 15))
                                     .shadow(color: .gray.opacity(0.5), radius: 5)
                                     .frame(height: geom.size.height)
                                     .padding()
-                                    .onTapGesture {
-                                        withAnimation(.easeInOut) {
-                                            isExpanded.toggle()
-                                        }
-                                    }
+                                   
                             case .climbed:
                                 ClimbView(manager: manager)
                                     .matchedGeometryEffect(id: title, in: namespace)

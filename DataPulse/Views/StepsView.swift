@@ -12,7 +12,7 @@ struct StepsView: View {
     
     var closeButtonPressed: () -> ()
     
-    init(manager: HKDataManagerProtocol, closeButtonPressed: @escaping () -> () ) {
+    init(manager: HKDataManagerProtocol, closeButtonPressed: @escaping () -> ()) {
         _stepsVM = StateObject(wrappedValue: StepsViewModel(manager: manager))
         self.closeButtonPressed = closeButtonPressed
         

@@ -20,7 +20,6 @@ struct SubTitleTextModifier: ViewModifier {
             .foregroundStyle(foregroundColor)
             .frame(maxWidth: .infinity, alignment: .leading)
             .multilineTextAlignment(.leading)
-            .minimumScaleFactor(0.7)
     }
 }
 

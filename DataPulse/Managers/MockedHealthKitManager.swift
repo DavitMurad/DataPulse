@@ -51,7 +51,7 @@ class MockedHealthKitManager: HKDataManagerProtocol  {
      
      func getCaloriesData() async throws -> CaloriesModel {
          
-         let weeklyCaloriesBurned = [212.4, 189.7, 225.8, 248.3, 181.9, 194.6, 203.5].enumerated().map { HealthDataPoint(date: Calendar.current.date(byAdding: .day, value: $0.offset - 6, to: .now)!, value: $0.element) }
+         let weeklyCaloriesBurned = [212.4, 189.7, 225.8, 248.3, 181.9, 341.9, 203.5].enumerated().map { HealthDataPoint(date: Calendar.current.date(byAdding: .day, value: $0.offset - 6, to: .now)!, value: $0.element) }
          
          return CaloriesModel(weeklyCaloriesBurned: weeklyCaloriesBurned, latest: weeklyCaloriesBurned.last?.value ?? 0)
      }

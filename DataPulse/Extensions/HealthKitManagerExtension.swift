@@ -37,18 +37,12 @@ extension HealthKitManager {
                 result?.enumerateStatistics(from: startOfWeek, to: dayStart) { stats, _ in
                     switch options {
                     case .cumulativeSum:
-                        print(stats.startDate.formatted(date: .abbreviated, time: .omitted))
-                        print("''''''''''")
-                        print(stats.endDate.formatted(date: .abbreviated, time: .omitted))
                         let endDate = stats.endDate.formatted(date: .abbreviated, time: .omitted)
                         let sumQuantity = stats.sumQuantity()?.doubleValue(for: unit) ?? 0
                         resultQuantity.append(HealthDataPoint(date: stats.endDate, value: sumQuantity))
                         
                         
                     case .mostRecent:
-                        print(stats.startDate.formatted(date: .abbreviated, time: .omitted))
-                        print("''''''''''")
-                        print(stats.endDate.formatted(date: .abbreviated, time: .omitted))
                         let endDate = stats.endDate.formatted(date: .abbreviated, time: .omitted)
                         let sumQuantity = stats.sumQuantity()?.doubleValue(for: unit) ?? 0
                         resultQuantity.append(HealthDataPoint(date: stats.endDate, value: sumQuantity))
