@@ -6,29 +6,47 @@
 //
 
 import SwiftUI
+import Charts
 
 struct ClimbView: View {
-    @StateObject var vm: ClimbedViewModel
+    @StateObject var climbedVM: ClimbedViewModel
     
-    init(manager: HKDataManagerProtocol) {
-        _vm = StateObject(wrappedValue: ClimbedViewModel(manager: manager))
+    var closeButtonPressed: () -> ()
+    
+    init(manager: HKDataManagerProtocol, closeButtonPressed: @escaping () -> ()) {
+        _climbedVM = StateObject(wrappedValue: ClimbedViewModel(manager: manager))
+        self.closeButtonPressed = closeButtonPressed
+        
     }
     var body: some View {
         ZStack {
             Color.white
-            VStack {
-                Text("Climbed")
-                Text("\(vm.climbedData?.latest ?? 0.0)")
+            VStack(spacing: 20) {
+                backButtonView
+                
+                climbedTodayView
+                
+                Divider()
+                
+                weeklyClimbedBarView
+                
+                Divider()
+                
+                monthlyDistributionAcrossWeekView
             }
+            .padding()
             .task {
                 do {
-                    try await vm.getClimbedData()
+                    try await climbedVM.getClimbedData()
                 } catch {}
             }
         }
     }
 }
 
-//#Preview {
-//    ClimbView()
-//}
+#Preview {
+    let manager = MockedHealthKitManager()
+    ClimbView(manager: manager) {
+        
+    }
+}

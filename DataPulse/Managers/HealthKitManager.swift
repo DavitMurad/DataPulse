@@ -43,11 +43,18 @@ class HealthKitManager: HKDataManagerProtocol {
     func getStepsdData() async throws -> StepsModel {
         do {
             let monthly = try await getHKData(identifier: .stepCount, unit: .count(), options: .cumulativeSum, startFrom: 30)
+            let monthlySum = monthly.reduce(0, {$0 + $1.value})
             let weekly = Array(monthly.suffix(7))
             
             let weeklyAvg = weekly.reduce(0, {$0 + $1.value}) / Double(weekly.count)
             
-            return StepsModel(latest: weekly.last?.value ?? 0, weeklyAvg: weeklyAvg, weekly: weekly, monthly: monthly)
+            var weeklySum: [HealthDataPoint] = []
+
+            for start in stride(from: 0, to: monthly.count, by: 7) {
+                let end = min(start + 7, monthly.count)
+                weeklySum.append(HealthDataPoint(date: monthly[end - 1].date, value: monthly[start..<end].reduce(0, {$0 + $1.value})))
+            }
+            return StepsModel(latest: weekly.last?.value ?? 0, weeklyAvg: weeklyAvg, weekly: weekly, monthly: monthly, monthlySum: monthlySum, weeklySum: weeklySum)
             
         } catch {
             throw HealthKitSystemError.notAvailable
@@ -57,11 +64,17 @@ class HealthKitManager: HKDataManagerProtocol {
     func getClimbedData() async throws -> ClimbedModel {
         do {
             let monthly = try await getHKData(identifier: .flightsClimbed, unit: .count(), options: .cumulativeSum, startFrom: 30)
+            let monthlySum = monthly.reduce(0, {$0 + $1.value})
             let weekly = Array(monthly.suffix(7))
             let weeklyAvg = weekly.reduce(0, {$0 + $1.value}) / Double(weekly.count)
-    
-            return ClimbedModel(latest: weekly.last?.value ?? 0, weeklyAvg: weeklyAvg, weekly: weekly, monthly: monthly)
+            var weeklySum: [HealthDataPoint] = []
+
+            for start in stride(from: 0, to: monthly.count, by: 7) {
+                let end = min(start + 7, monthly.count)
+                weeklySum.append(HealthDataPoint(date: monthly[end - 1].date, value: monthly[start..<end].reduce(0, {$0 + $1.value})))
+            }
             
+            return ClimbedModel(latest: weekly.last?.value ?? 0, weeklyAvg: weeklyAvg, weekly: weekly, monthly: monthly, monthlySum: monthlySum, weeklySum: weeklySum)
         } catch {
             throw HealthKitSystemError.notAvailable
         }

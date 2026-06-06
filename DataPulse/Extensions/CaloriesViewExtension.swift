@@ -17,7 +17,7 @@ extension CaloriesView {
     var calsToday: some View {
         GroupBox {
             VStack {
-                Text("Burned calories today")
+                Text("Burned calories today.")
                     .withSubTitleTextFormmatting(font: .title3, foregroundColor: .primary)
                 
                 Text(caloriesVM.caloriesData?.latest ?? 0.0, format: .number)
@@ -29,7 +29,7 @@ extension CaloriesView {
     var calsProgressView: some View {
         GroupBox {
             VStack {
-                Text("Burned calories across this week")
+                Text("Burned calories across this week.")
                     .withSubTitleTextFormmatting(font: .title3, foregroundColor: .primary)
                 
                 ScrollView(.horizontal, showsIndicators: false) {

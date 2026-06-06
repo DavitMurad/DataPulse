@@ -20,7 +20,7 @@ extension StepsView {
     var stepsForTodayView: some View {
         GroupBox {
             VStack {
-                Text("Your steps for today:")
+                Text("Your steps for today.")
                     .withSubTitleTextFormmatting(font: .title3, foregroundColor: .primary)
                 Text(stepsVM.stepData?.latest ?? 0, format: .number)
                     .withSubTitleTextFormmatting(font: .headline, foregroundColor: .secondary)
@@ -31,8 +31,10 @@ extension StepsView {
     var barChartView : some View {
         GroupBox {
             VStack {
-                Text("Your weekly steps.")
+                Text("Your weekly steps on average.")
                     .withSubTitleTextFormmatting(font: .title3, foregroundColor: .primary)
+                Text(stepsVM.stepData?.weeklyAvg ?? 0, format: .number.precision(.fractionLength(0)))
+                    .withSubTitleTextFormmatting(font: .headline, foregroundColor: .secondary)
                 
                 Chart {
                     if let stepData = stepsVM.stepData {
@@ -66,30 +68,22 @@ extension StepsView {
     var pieChartView: some View {
         GroupBox {
             VStack {
-                Text("Your weekly step distribution across weeks.")
+                Text("Your monthly step distribution across weeks.")
                     .withSubTitleTextFormmatting(font: .title3, foregroundColor: .primary)
+                Text("\(stepsVM.stepData?.monthlySum ?? 0.0, format: .number)")
+                    .withSubTitleTextFormmatting(font: .headline, foregroundColor: .secondary)
                 
                 if let stepData = stepsVM.stepData {
-                    Chart(stepData.weekly) { day in
-                        SectorMark(angle: .value(Text(verbatim: day.date.formatted(.dateTime.day().month())), day.value),
-                                   innerRadius: .ratio(0.6)
-                        )
+                    Chart(stepData.weeklySum) { sum in
+                        SectorMark(angle: .value(Text(verbatim: sum.date.formatted(.dateTime.week().weekday())), sum.value),
+                                   innerRadius: .ratio(0.6))
                         .annotation(position: .overlay, content: {
-                            Text((String(format: "%.0f", day.value)))
+                            Text("\(sum.value.kFormat)")
                                 .font(.caption)
                                 .foregroundStyle(.white)
                         })
-                        .foregroundStyle(
-                            by: .value(
-                                "Day",
-                                day.date.formatted(.dateTime.month().day())
-                            )
-                        )
+                        .foregroundStyle(by: .value("Week", sum.date.formatted(.dateTime.month(.abbreviated).day())))
                     }
-                    
-                    //                .chartBackground(content: { chartProxy in
-                    //
-                    //                })
                 }
             }
         }

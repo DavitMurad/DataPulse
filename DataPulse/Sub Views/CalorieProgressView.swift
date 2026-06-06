@@ -20,7 +20,6 @@ struct CalorieProgressView: View {
                 .padding()
                 .overlay {
                     Text("\(date.formatted(.dateTime.day().month()))")
-                        
                 }
                 .padding()
 

@@ -12,7 +12,6 @@ struct SubTitleTextModifier: ViewModifier {
     let foregroundColor: Color
     let fontWeight: Font.Weight
     
-    
     func body(content: Content) -> some View {
         content
             .font(font)

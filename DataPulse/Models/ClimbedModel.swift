@@ -12,4 +12,6 @@ struct ClimbedModel {
     let weeklyAvg: Double
     let weekly: [HealthDataPoint]
     let monthly: [HealthDataPoint]
+    let monthlySum: Double
+    let weeklySum: [HealthDataPoint]
 }

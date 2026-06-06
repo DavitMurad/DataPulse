@@ -42,7 +42,7 @@ struct CatalogueView: View {
         self.manager = manager
     }
     var body: some View {
- 
+        
         NavigationStack {
             GeometryReader { geom in
                 ScrollView(showsIndicators: false) {
@@ -58,7 +58,7 @@ struct CatalogueView: View {
                                         }
                                     }
                                 }
-
+                                
                                 if !isExpanded {
                                     HKCategoryView(color: .pink, systemImageName: "scalemass", title: "Weight", rotationDegree: 0, namespace: namespace, isExpanded: $isExpanded) {
                                         title = ViewTitlesOption.weight.title
@@ -80,70 +80,70 @@ struct CatalogueView: View {
                                         }
                                     }
                                 }
-                                
-                                HKCategoryView(color: .orange, systemImageName: "figure.stairs", title: "Climbed", rotationDegree: 0,namespace: namespace, isExpanded: $isExpanded) {
-                                    title = ViewTitlesOption.climbed.title
-                                    currentExpandedView = .climbed
-                                    withAnimation(.bouncy) {
-                                        isExpanded.toggle()
+                                if !isExpanded {
+                                    HKCategoryView(color: .orange, systemImageName: "figure.stairs", title: "Climbed", rotationDegree: 0,namespace: namespace, isExpanded: $isExpanded) {
+                                        title = ViewTitlesOption.climbed.title
+                                        currentExpandedView = .climbed
+                                        withAnimation(.easeInOut) {
+                                            isExpanded.toggle()
+                                        }
                                     }
+                                    
                                 }
-                                
                             }
                         }
                         .frame(maxWidth: .infinity)
-
+                        
                         if isExpanded {
                             switch currentExpandedView {
                             case .steps:
+                                
                                 StepsView(manager: manager) {
                                     withAnimation(.easeInOut) {
                                         isExpanded.toggle()
                                     }
                                 }
-                                    .matchedGeometryEffect(id: title, in: namespace)
-                                    .clipShape(RoundedRectangle(cornerRadius: 15))
-                                    .shadow(color: .gray.opacity(0.5), radius: 5)
-                                    .frame(height: geom.size.height)
-                                    .padding()
-                                  
+                                .matchedGeometryEffect(id: title, in: namespace)
+                                .clipShape(RoundedRectangle(cornerRadius: 15))
+                                .shadow(color: .gray.opacity(0.5), radius: 5)
+                                .frame(height: geom.size.height)
+                                .padding()
+                                
                             case .weight:
                                 WeightView(manager: manager) {
                                     withAnimation(.easeInOut) {
                                         isExpanded.toggle()
                                     }
                                 }
-                                    .matchedGeometryEffect(id: title, in: namespace)
-                                    .clipShape(RoundedRectangle(cornerRadius: 15))
-                                    .shadow(color: .gray.opacity(0.5), radius: 5)
-                                    .frame(height: geom.size.height)
-                                    .padding()
+                                .matchedGeometryEffect(id: title, in: namespace)
+                                .clipShape(RoundedRectangle(cornerRadius: 15))
+                                .shadow(color: .gray.opacity(0.5), radius: 5)
+                                .frame(height: geom.size.height)
+                                .padding()
                             case .calories:
                                 CaloriesView(manager: manager) {
                                     withAnimation(.easeInOut) {
                                         isExpanded.toggle()
                                     }
                                 }
-                                    .matchedGeometryEffect(id: title, in: namespace)
-                                    .clipShape(RoundedRectangle(cornerRadius: 15))
-                                    .shadow(color: .gray.opacity(0.5), radius: 5)
-                                    .frame(height: geom.size.height)
-                                    .padding()
-                                   
+                                .matchedGeometryEffect(id: title, in: namespace)
+                                .clipShape(RoundedRectangle(cornerRadius: 15))
+                                .shadow(color: .gray.opacity(0.5), radius: 5)
+                                .frame(height: geom.size.height)
+                                .padding()
+                                
                             case .climbed:
-                                ClimbView(manager: manager)
-                                    .matchedGeometryEffect(id: title, in: namespace)
-                                    .clipShape(RoundedRectangle(cornerRadius: 15))
-                                    .shadow(color: .gray.opacity(0.5), radius: 5)
-                                    .frame(height: geom.size.height)
-                                    .padding()
-                                    .onTapGesture {
-                                        withAnimation(.easeInOut) {
-                                            isExpanded.toggle()
-                                        }
+                                ClimbView(manager: manager) {
+                                    withAnimation(.easeInOut) {
+                                        isExpanded.toggle()
                                     }
-                            }
-                       
+                                }
+                                .matchedGeometryEffect(id: title, in: namespace)
+                                .clipShape(RoundedRectangle(cornerRadius: 15))
+                                .shadow(color: .gray.opacity(0.5), radius: 5)
+                                .frame(height: geom.size.height)
+                                .padding()                            }
+                            
                             
                         }
                         
@@ -161,12 +161,24 @@ struct CatalogueView: View {
                     
                 }
             }
-        
+            
         }
     }
+    
 }
 
+//extension CatalogueView {
+//    func determineExpandedView(view: some View) -> some View {
+//        view
+//            .matchedGeometryEffect(id: title, in: namespace)
+//            .clipShape(RoundedRectangle(cornerRadius: 15))
+//            .shadow(color: .gray.opacity(0.5), radius: 5)
+//            .frame(height: geom.size.height)
+//            .padding()
+//    }
+//}
+
 #Preview {
-    let manager = HealthKitManager()
+    let manager = MockedHealthKitManager()
     CatalogueView(manager: manager)
 }
