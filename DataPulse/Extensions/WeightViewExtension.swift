@@ -22,8 +22,6 @@ extension WeightView {
             VStack {
                 Text("Your weight this week on average.")
                     .withSubTitleTextFormmatting(font: .title3, foregroundColor: .primary)
-                
-//                Text((String(format: "%.1f",weightVM.weightdData?.weeklyAvgWeight ?? 0)))
                 Text(weightVM.weightdData?.weeklyAvgWeight ?? 0, format: .number.precision(.fractionLength(1)))
                     .withSubTitleTextFormmatting(font: .headline, foregroundColor: .secondary)
                 
@@ -59,7 +57,7 @@ extension WeightView {
         GroupBox {
             VStack {
                 Text("Your body fat this week.")
-                    .withSubTitleTextFormmatting(font: .title2, foregroundColor: .primary)
+                    .withSubTitleTextFormmatting(font: .title3, foregroundColor: .primary)
                 Text(weightVM.weightdData?.weeklyAvgBF ?? 0, format: .number.precision(.fractionLength(1)))
                     .withSubTitleTextFormmatting(font: .headline, foregroundColor: .secondary)
                 Chart {
@@ -95,7 +93,7 @@ extension WeightView {
         GroupBox {
             VStack {
                 Text("Your BMI today.")
-                    .withSubTitleTextFormmatting(font: .title2, foregroundColor: .primary)
+                    .withSubTitleTextFormmatting(font: .title3, foregroundColor: .primary)
                 Text(weightVM.weightdData?.bmi.value ?? 0, format: .number.precision(.fractionLength(1)))
                     .withSubTitleTextFormmatting(font: .headline, foregroundColor: .secondary)
                 BMIBarView(bmiScore: weightVM.weightdData?.bmi.value ?? 0)

@@ -142,8 +142,8 @@ struct CatalogueView: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 15))
                                 .shadow(color: .gray.opacity(0.5), radius: 5)
                                 .frame(height: geom.size.height)
-                                .padding()                            }
-                            
+                                .padding()
+                            }
                             
                         }
                         
@@ -158,25 +158,11 @@ struct CatalogueView: View {
                 vm.manager.requestAccess { isSuccess in
                     guard !isSuccess else { return }
                     
-                    
                 }
             }
-            
         }
     }
-    
 }
-
-//extension CatalogueView {
-//    func determineExpandedView(view: some View) -> some View {
-//        view
-//            .matchedGeometryEffect(id: title, in: namespace)
-//            .clipShape(RoundedRectangle(cornerRadius: 15))
-//            .shadow(color: .gray.opacity(0.5), radius: 5)
-//            .frame(height: geom.size.height)
-//            .padding()
-//    }
-//}
 
 #Preview {
     let manager = MockedHealthKitManager()
