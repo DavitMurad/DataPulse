@@ -56,6 +56,7 @@ struct HKCategoryView: View {
             .foregroundStyle(.black.opacity(0.5))
             .blendMode(.overlay)
             .font(.headline)
+           
             
             Text(title)
                 .lineLimit(1)
@@ -66,17 +67,10 @@ struct HKCategoryView: View {
                 .blendMode(.overlay)
                 .frame(width: 140)
                 .padding(.horizontal)
-            
-                .onTapGesture {
-                    buttonPressed()
-//                                            withAnimation(.bouncy) {
-//                                                isExpanded.toggle()
-//                                            }
-                }
+        
+        }
+        .onTapGesture {
+            buttonPressed()
         }
     }
 }
-
-//#Preview {
-//    HKCategoryView(color: .orange, systemImageName: "flame.fill", title: "Calories", rotationDegree: 45)
-//}

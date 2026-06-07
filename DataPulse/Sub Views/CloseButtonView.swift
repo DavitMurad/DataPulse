@@ -15,8 +15,10 @@ struct CloseButtonView: View {
             closeButtonPressed()
         } label: {
             Image(systemName: "xmark")
-                .withSubTitleTextFormmatting(font: .title2, foregroundColor: foreGroundColor)
+                .font(.title2)
+                .foregroundStyle(foreGroundColor)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
