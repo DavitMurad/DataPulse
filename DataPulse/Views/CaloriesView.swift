@@ -28,7 +28,7 @@ struct CaloriesView: View {
                 calsText
                 
             }
-            .frame(maxHeight: .infinity, alignment: .top)
+            
             .padding()
             .task {
                 do {

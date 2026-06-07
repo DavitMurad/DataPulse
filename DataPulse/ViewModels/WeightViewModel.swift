@@ -11,7 +11,6 @@ import Combine
 @MainActor
 class WeightViewModel: ObservableObject {
     let manager: HKDataManagerProtocol
-    let asd = 5...8
     @Published var weightdData: WeightModel?
     
     init(manager: HKDataManagerProtocol) {
@@ -37,7 +36,7 @@ class WeightViewModel: ObservableObject {
     }
     
     func getWeightData() async throws {
-        weightdData = try? await manager.getWeightData()
+        weightdData = try await manager.getWeightData()
     }
     
 

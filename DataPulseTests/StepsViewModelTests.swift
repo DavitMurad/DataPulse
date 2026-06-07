@@ -44,8 +44,12 @@ struct StepsViewModelTests {
         let manager = MockedHealthKitManager(stepResult: .failure(HealthKitSystemError.notAvailable))
         let stepVM = StepsViewModel(manager: manager)
         // When
-        try await stepVM.getStepsData()
+   
         // Then
+        await #expect(throws: HealthKitSystemError.notAvailable) {
+             try await stepVM.getStepsData()
+
+         }
         #expect(stepVM.stepData == nil)
     }
     
@@ -91,7 +95,7 @@ struct StepsViewModelTests {
         
         // Then
         let stepData = try #require(stepVM.stepData)
-        #expect(stepData.weekly.last?.value == 8124.0)
+        #expect(stepData.latest == 8124.0)
     }
     
     @MainActor

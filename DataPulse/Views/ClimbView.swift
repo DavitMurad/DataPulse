@@ -35,6 +35,7 @@ struct ClimbView: View {
                 monthlyDistributionAcrossWeekView
             }
             .padding()
+            
             .task {
                 do {
                     try await climbedVM.getClimbedData()

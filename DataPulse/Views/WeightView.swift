@@ -32,6 +32,7 @@ struct WeightView: View {
                 bmiBarView
             }
             .padding()
+            
             .task {
                 do {
                     try await weightVM.getWeightData()

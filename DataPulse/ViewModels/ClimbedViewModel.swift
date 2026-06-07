@@ -23,6 +23,6 @@ class ClimbedViewModel: ObservableObject {
     }
     
     func getClimbedData() async throws {
-        climbedData = try? await manager.getClimbedData()
+        climbedData = try await manager.getClimbedData()
     }
 }

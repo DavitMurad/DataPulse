@@ -32,15 +32,18 @@ struct CaloriesViewModelTests {
     }
     
     @MainActor
-    @Test func caloriesViewModel_caloreData_isNilDueToAnError() async throws {
+    @Test func caloriesViewModel_caloreData_isNilDueToAnError() async {
         // Given
         let manager = MockedHealthKitManager(caloriesResult: .failure(HealthKitSystemError.notAvailable))
         let caloriesVM = CaloriesViewModel(manager: manager)
         
         // When
-        try await caloriesVM.getCaloriesDataData()
         
         // Then
+        await #expect(throws: HealthKitSystemError.notAvailable) {
+            try await caloriesVM.getCaloriesDataData()
+
+        }
         #expect(caloriesVM.caloriesData == nil)
     }
     

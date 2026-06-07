@@ -44,9 +44,11 @@ struct ClimbedViewModelTests {
         let climbedVM = ClimbedViewModel(manager: manager)
         
         // When
-        try await climbedVM.getClimbedData()
-        
+    
         // Then
+        await #expect(throws: HealthKitSystemError.notAvailable) {
+            try await climbedVM.getClimbedData()
+        }
         #expect(climbedVM.climbedData == nil)
     }
     

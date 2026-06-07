@@ -21,6 +21,6 @@ class CaloriesViewModel: ObservableObject {
     }
     
     func getCaloriesDataData() async throws  {
-        caloriesData = try? await manager.getCaloriesData()
+        caloriesData = try await manager.getCaloriesData()
     }
 }

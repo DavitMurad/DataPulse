@@ -46,6 +46,5 @@ struct StepsView: View {
 #Preview {
     let manager = MockedHealthKitManager()
     StepsView(manager: manager) {
-        print("asd")
     }
 }

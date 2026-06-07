@@ -14,16 +14,16 @@ class StepsViewModel: ObservableObject {
     let manager: HKDataManagerProtocol
     
     @Published var stepData: StepsModel?
-
+    
     init(manager: HKDataManagerProtocol) {
         self.manager = manager
     }
     
     func getStepsData() async throws {
-        if let stepData = try? await manager.getStepsdData() {
-            self.stepData = stepData
-        }
+        stepData = try await manager.getStepsdData()
+        
     }
+    
     
     var XAxisScale: ClosedRange<Date> {
         Calendar.current.date(byAdding: .day, value: -7, to: .now)! ... .now
