@@ -59,7 +59,6 @@ extension StepsView {
                 .chartXAxis {
                     AxisMarks(position: .bottom, values: .stride(by: .day))
                 }
-                .chartXScale(domain: stepsVM.XAxisScale)
                 .padding(.horizontal, 15)
             }
         }

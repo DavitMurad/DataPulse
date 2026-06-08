@@ -44,125 +44,129 @@ struct CatalogueView: View {
     var body: some View {
         
         NavigationStack {
-            GeometryReader { geom in
-                ScrollView(showsIndicators: false) {
-                    ZStack {
-                        VStack(spacing: 50) {
-                            HStack(spacing: 50) {
-                                if !isExpanded {
-                                    HKCategoryView(color: .blue, systemImageName: "shoeprints.fill", title: "Steps", rotationDegree: 0, namespace: namespace, isExpanded: $isExpanded) {
-                                        title = ViewTitlesOption.steps.title
-                                        currentExpandedView = .steps
-                                        withAnimation(.easeInOut) {
-                                            isExpanded.toggle()
+            ZStack {
+                LinearGradient(
+                    colors: [
+                        Color(red: 0.88, green: 0.94, blue: 1.0),
+                        Color(red: 0.96, green: 0.97, blue: 1.0),
+                        Color(red: 1.0, green: 0.91, blue: 0.95)
+                    ],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                .ignoresSafeArea()
+                GeometryReader { geom in
+                    ScrollView(showsIndicators: false) {
+                        ZStack {
+                            
+                            VStack(spacing: 50) {
+                                HStack(spacing: 50) {
+                                    if !isExpanded {
+                                        HKCategoryView(color: .blue, systemImageName: "shoeprints.fill", title: "Steps", rotationDegree: 0, namespace: namespace, isExpanded: $isExpanded) {
+                                            title = ViewTitlesOption.steps.title
+                                            currentExpandedView = .steps
+                                            withAnimation(.easeInOut) {
+                                                isExpanded.toggle()
+                                            }
                                         }
                                     }
-                                }
-                                
-                                if !isExpanded {
-                                    HKCategoryView(color: .pink, systemImageName: "scalemass", title: "Weight", rotationDegree: 0, namespace: namespace, isExpanded: $isExpanded) {
-                                        title = ViewTitlesOption.weight.title
-                                        currentExpandedView = .weight
-                                        withAnimation(.easeInOut) {
-                                            isExpanded.toggle()
-                                        }
-                                    }
-                                }
-                                
-                            }
-                            HStack(spacing: 50)  {
-                                if !isExpanded {
-                                    HKCategoryView(color: .green, systemImageName: "flame.fill", title: "Calories", rotationDegree: 0, namespace: namespace, isExpanded: $isExpanded) {
-                                        title = ViewTitlesOption.calories.title
-                                        currentExpandedView = .calories
-                                        withAnimation(.easeInOut) {
-                                            isExpanded.toggle()
-                                        }
-                                    }
-                                }
-                                if !isExpanded {
-                                    HKCategoryView(color: .orange, systemImageName: "figure.stairs", title: "Climbed", rotationDegree: 0,namespace: namespace, isExpanded: $isExpanded) {
-                                        title = ViewTitlesOption.climbed.title
-                                        currentExpandedView = .climbed
-                                        withAnimation(.easeInOut) {
-                                            isExpanded.toggle()
+                                    
+                                    if !isExpanded {
+                                        HKCategoryView(color: .pink, systemImageName: "scalemass", title: "Weight", rotationDegree: 0, namespace: namespace, isExpanded: $isExpanded) {
+                                            title = ViewTitlesOption.weight.title
+                                            currentExpandedView = .weight
+                                            withAnimation(.easeInOut) {
+                                                isExpanded.toggle()
+                                            }
                                         }
                                     }
                                     
                                 }
+                                HStack(spacing: 50)  {
+                                    if !isExpanded {
+                                        HKCategoryView(color: .green, systemImageName: "flame.fill", title: "Calories", rotationDegree: 0, namespace: namespace, isExpanded: $isExpanded) {
+                                            title = ViewTitlesOption.calories.title
+                                            currentExpandedView = .calories
+                                            withAnimation(.easeInOut) {
+                                                isExpanded.toggle()
+                                            }
+                                        }
+                                    }
+                                    if !isExpanded {
+                                        HKCategoryView(color: .orange, systemImageName: "figure.stairs", title: "Climbed", rotationDegree: 0,namespace: namespace, isExpanded: $isExpanded) {
+                                            title = ViewTitlesOption.climbed.title
+                                            currentExpandedView = .climbed
+                                            withAnimation(.easeInOut) {
+                                                isExpanded.toggle()
+                                            }
+                                        }
+                                        
+                                    }
+                                }
                             }
-                        }
-                        .frame(maxWidth: .infinity)
-                        
-                        if isExpanded {
-                            switch currentExpandedView {
-                            case .steps:
+                            .frame(maxWidth: .infinity)
+                            
+                            if isExpanded {
+                                switch currentExpandedView {
+                                case .steps:
+                                    
+                                    StepsView(manager: manager) {
+                                        withAnimation(.easeInOut) {
+                                            isExpanded.toggle()
+                                        }
+                                    }
+                                    .matchedGeometryEffect(id: title, in: namespace)
+                                    .withCategoryCardModifier(geom)
+                                    
+                                case .weight:
+                                    WeightView(manager: manager) {
+                                        withAnimation(.easeInOut) {
+                                            isExpanded.toggle()
+                                        }
+                                    }
+                                    .matchedGeometryEffect(id: title, in: namespace)
+                                    .withCategoryCardModifier(geom)
+                                case .calories:
+                                    CaloriesView(manager: manager) {
+                                        withAnimation(.easeInOut) {
+                                            isExpanded.toggle()
+                                        }
+                                    }
+                                    .matchedGeometryEffect(id: title, in: namespace)
+                                    .withCategoryCardModifier(geom)
+                                    
+                                case .climbed:
+                                    ClimbView(manager: manager) {
+                                        withAnimation(.easeInOut) {
+                                            isExpanded.toggle()
+                                        }
+                                    }
+                                    .matchedGeometryEffect(id: title, in: namespace)
+                                    .withCategoryCardModifier(geom)
+                                }
                                 
-                                StepsView(manager: manager) {
-                                    withAnimation(.easeInOut) {
-                                        isExpanded.toggle()
-                                    }
-                                }
-                                .matchedGeometryEffect(id: title, in: namespace)
-                                .clipShape(RoundedRectangle(cornerRadius: 15))
-                                .shadow(color: .gray.opacity(0.5), radius: 5)
-                                .frame(height: geom.size.height)
-                                .padding()
-                                
-                            case .weight:
-                                WeightView(manager: manager) {
-                                    withAnimation(.easeInOut) {
-                                        isExpanded.toggle()
-                                    }
-                                }
-                                .matchedGeometryEffect(id: title, in: namespace)
-                                .clipShape(RoundedRectangle(cornerRadius: 15))
-                                .shadow(color: .gray.opacity(0.5), radius: 5)
-                                .frame(height: geom.size.height)
-                                .padding()
-                            case .calories:
-                                CaloriesView(manager: manager) {
-                                    withAnimation(.easeInOut) {
-                                        isExpanded.toggle()
-                                    }
-                                }
-                                .matchedGeometryEffect(id: title, in: namespace)
-                                .clipShape(RoundedRectangle(cornerRadius: 15))
-                                .shadow(color: .gray.opacity(0.5), radius: 5)
-                                .frame(height: geom.size.height)
-                                .padding()
-                                
-                            case .climbed:
-                                ClimbView(manager: manager) {
-                                    withAnimation(.easeInOut) {
-                                        isExpanded.toggle()
-                                    }
-                                }
-                                .matchedGeometryEffect(id: title, in: namespace)
-                                .clipShape(RoundedRectangle(cornerRadius: 15))
-                                .shadow(color: .gray.opacity(0.5), radius: 5)
-                                .frame(height: geom.size.height)
-                                .padding()
                             }
                             
                         }
+                    }
+                    .frame(maxHeight: .infinity, alignment: .top)
+                    .padding(.top, 5)
+                    .navigationTitle("Activity")
+                    .navigationBarTitleDisplayMode(.inline)
+                }
+                .task {
+                    vm.manager.requestAccess { isSuccess in
+                        guard !isSuccess else { return }
                         
                     }
-                }
-                .frame(maxHeight: .infinity, alignment: .top)
-                .padding(.top, 5)
-                .navigationTitle("Activity")
-                .navigationBarTitleDisplayMode(.inline)
-            }
-            .task {
-                vm.manager.requestAccess { isSuccess in
-                    guard !isSuccess else { return }
-                    
                 }
             }
         }
     }
 }
+
+
+
 
 #Preview {
     let manager = MockedHealthKitManager()

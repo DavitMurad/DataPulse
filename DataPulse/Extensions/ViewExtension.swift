@@ -22,8 +22,25 @@ struct SubTitleTextModifier: ViewModifier {
     }
 }
 
+struct CategoryCardViewModifier: ViewModifier {
+    let geom: GeometryProxy
+    func body(content: Content) -> some View {
+        return content
+            .clipShape(RoundedRectangle(cornerRadius: 15))
+            .shadow(color: .gray.opacity(0.5), radius: 5)
+            .frame(height: geom.size.height)
+            .padding()
+    }
+}
+
+
+
 extension View {
     func withSubTitleTextFormmatting(font: Font, foregroundColor: Color, fontWeight: Font.Weight = .semibold) -> some View {
         self.modifier(SubTitleTextModifier(font: font, foregroundColor: foregroundColor, fontWeight: fontWeight))
+    }
+    
+    func withCategoryCardModifier(_ geom: GeometryProxy) -> some View {
+        self.modifier(CategoryCardViewModifier(geom: geom))
     }
 }

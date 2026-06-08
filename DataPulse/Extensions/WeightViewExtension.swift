@@ -46,8 +46,6 @@ extension WeightView {
                 .chartXAxis {
                     AxisMarks(position: .bottom, values: .stride(by: .day))
                 }
-                .chartXScale(domain: weightVM.getDateDomain)
-                .chartYScale(domain: weightVM.getLastWeight)
                 .padding(.horizontal, 15)
             }
         }
@@ -82,8 +80,6 @@ extension WeightView {
                 .chartXAxis {
                     AxisMarks(position: .bottom, values: .stride(by: .day))
                 }
-                .chartXScale(domain: weightVM.getDateDomain)
-                .chartYScale(domain: weightVM.getLastBodyFat)
                 .padding(.horizontal, 15)
             }
         }
