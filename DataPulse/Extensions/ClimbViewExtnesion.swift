@@ -54,7 +54,7 @@ extension ClimbView {
                         }
                     }
                 }
-                .chartYScale(domain: climbedVM.yAxisScale)
+//                .chartYScale(domain: climbedVM.yAxisScale)
                 .chartYAxis {
                     AxisMarks(position: .trailing, values: .stride(by: .day))
                 }

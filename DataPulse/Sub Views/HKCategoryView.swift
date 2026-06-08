@@ -72,5 +72,7 @@ struct HKCategoryView: View {
         .onTapGesture {
             buttonPressed()
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityIdentifier(title)
     }
 }

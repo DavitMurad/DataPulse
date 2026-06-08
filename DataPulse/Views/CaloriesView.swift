@@ -18,6 +18,9 @@ struct CaloriesView: View {
     var body: some View {
         ZStack {
             Color.white
+                .ignoresSafeArea()
+            
+            
             VStack(spacing: 20) {
                 closeButton
                 
@@ -26,16 +29,14 @@ struct CaloriesView: View {
                 calsProgressView
                 Divider()
                 calsText
-                
             }
-            
             .padding()
-            .task {
-                do {
-                    try await caloriesVM.getCaloriesDataData()
-                    
-                } catch {}
-            }
+        }
+        .task {
+            do {
+                try await caloriesVM.getCaloriesDataData()
+                
+            } catch {}
         }
     }
 }

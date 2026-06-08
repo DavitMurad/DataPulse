@@ -32,7 +32,7 @@ class WeightViewModel: ObservableObject {
     }
     
     var getDateDomain: ClosedRange<Date> {
-        Calendar.current.date(byAdding: .day, value: -7, to: .now)! ... .now
+        Calendar.current.date(byAdding: .day, value: -6, to: .now)! ... .now
     }
     
     func getWeightData() async throws {

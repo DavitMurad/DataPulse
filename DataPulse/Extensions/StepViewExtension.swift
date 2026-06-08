@@ -22,7 +22,7 @@ extension StepsView {
             VStack {
                 Text("Your steps for today.")
                     .withSubTitleTextFormmatting(font: .title3, foregroundColor: .primary)
-                Text(stepsVM.stepData?.latest ?? 0, format: .number)
+                Text(stepsVM.stepData?.latest ?? 0, format: .number.precision(.fractionLength(0)))
                     .withSubTitleTextFormmatting(font: .headline, foregroundColor: .secondary)
             }
         }

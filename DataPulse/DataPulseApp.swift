@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct DataPulseApp: App {
-    let manager = MockedHealthKitManager()
+    let manager = HealthKitManager()
     var body: some Scene {
         WindowGroup {
             CatalogueView(manager: manager).preferredColorScheme(.light)

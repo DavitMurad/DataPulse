@@ -59,7 +59,6 @@ struct CalorieProgressView: View {
                 VStack {
                     Text("\(Int(progress * 300)) / 300")
                         .font(.title3)
-                    //                    .foregroundStyle(.green)
                         .fontWeight(.semibold)
                     Text("\(Int(progress * 100))%")
                         .font(.title3)

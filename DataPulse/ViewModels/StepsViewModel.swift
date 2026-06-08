@@ -15,6 +15,11 @@ class StepsViewModel: ObservableObject {
     
     @Published var stepData: StepsModel?
     
+    
+    var XAxisScale: ClosedRange<Date> {
+        Calendar.current.date(byAdding: .day, value: -6, to: .now)! ... .now
+    }
+    
     init(manager: HKDataManagerProtocol) {
         self.manager = manager
     }
@@ -24,8 +29,5 @@ class StepsViewModel: ObservableObject {
         
     }
     
-    
-    var XAxisScale: ClosedRange<Date> {
-        Calendar.current.date(byAdding: .day, value: -7, to: .now)! ... .now
-    }
+
 }

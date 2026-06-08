@@ -15,7 +15,7 @@ class ClimbedViewModel: ObservableObject {
     @Published var climbedData: ClimbedModel?
     
     var yAxisScale: ClosedRange<Date> {
-        Calendar.current.date(byAdding: .day, value: -7, to: .now)! ... .now
+        Calendar.current.date(byAdding: .day, value: -6, to: .now)! ... .now
     }
     
     init(manager: HKDataManagerProtocol) {

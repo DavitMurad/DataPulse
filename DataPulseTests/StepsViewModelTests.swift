@@ -17,7 +17,7 @@ struct StepsViewModelTests {
     
     
     @MainActor
-    @Test func stepsViewModel_stepData_isNil() async {
+    @Test func stepsViewModel_stepData_isNil() {
         // Given
 //        let manager = MockedHealthKitManager()
         let stepVM = StepsViewModel(manager: manager)

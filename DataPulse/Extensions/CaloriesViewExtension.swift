@@ -47,12 +47,15 @@ extension CaloriesView {
     }
     
     var calsText: some View {
-        GroupBox {
-            VStack {
-                Text("Note")
-                    .withSubTitleTextFormmatting(font: .title3, foregroundColor: .primary)
-                Text(caloriesVM.calNote)
-                .withSubTitleTextFormmatting(font: .footnote, foregroundColor: .secondary, fontWeight: .regular)
+        ScrollView {
+            GroupBox {
+                VStack {
+                    Text("Note")
+                        .withSubTitleTextFormmatting(font: .title3, foregroundColor: .primary)
+                    Text(caloriesVM.calNote)
+                        .withSubTitleTextFormmatting(font: .footnote, foregroundColor: .secondary, fontWeight: .regular)
+                    
+                }
             }
         }
     }
