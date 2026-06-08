@@ -32,7 +32,7 @@ extension ClimbView {
                 Text("Your weekly climbed stairs on average.")
                     .withSubTitleTextFormmatting(font: .title3, foregroundColor: .primary)
                 
-                Text("\(climbedVM.climbedData?.weeklyAvg ?? 0, format: .number)")
+                Text(climbedVM.climbedData?.weeklyAvg ?? 0, format: .number.precision(.fractionLength(0)))
                     .withSubTitleTextFormmatting(font: .headline, foregroundColor: .secondary)
                 
                 Chart {
@@ -54,7 +54,6 @@ extension ClimbView {
                         }
                     }
                 }
-//                .chartYScale(domain: climbedVM.yAxisScale)
                 .chartYAxis {
                     AxisMarks(position: .trailing, values: .stride(by: .day))
                 }

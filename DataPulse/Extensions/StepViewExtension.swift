@@ -79,7 +79,7 @@ extension StepsView {
                                    innerRadius: .ratio(0.6))
                         .annotation(position: .overlay, content: {
                             Text("\(sum.value.kFormat)")
-                                .font(.caption)
+                                .font(.caption2)
                                 .foregroundStyle(.white)
                         })
                         .foregroundStyle(by: .value("Week", sum.date.formatted(.dateTime.month(.abbreviated).day())))

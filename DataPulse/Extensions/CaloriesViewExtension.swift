@@ -20,7 +20,7 @@ extension CaloriesView {
                 Text("Burned calories today.")
                     .withSubTitleTextFormmatting(font: .title3, foregroundColor: .primary)
                 
-                Text(caloriesVM.caloriesData?.latest ?? 0.0, format: .number)
+                Text(caloriesVM.caloriesData?.latest ?? 0.0, format: .number.precision(.fractionLength(0)))
                     .withSubTitleTextFormmatting(font: .headline, foregroundColor: .secondary)
                 
             }
